@@ -87,12 +87,13 @@ public class Controller {
 				// loadFile();
 
 				loadAllData();
+				
 
 			}
 
 			if (v.getvPrincipal().getBtnRead() == b) {
 
-				loadFile();
+				updateTableView();
 
 			}
 
@@ -108,7 +109,7 @@ public class Controller {
 					JOptionPane.showMessageDialog(null, "Not found ID");
 				}
 
-				v.getvPrincipal().getTabla().getTable().setModel(m.fillDataTable());
+				updateTableView();
 
 			}
 
@@ -194,7 +195,8 @@ public class Controller {
 		private void loadAllData() {
 			GamerDAO dao = new GamerDAO();
 			m.overideData(dao.loadAll());
-			v.getvPrincipal().getTabla().getTable().setModel(m.fillDataTable());
+			v.getvPrincipal().getRbGamers().setSelected(true);
+			updateTableView();
 
 		}
 
@@ -203,13 +205,23 @@ public class Controller {
 			GamerDTO t = dao.load("Data", 2);
 
 			m.addGamer(t);
-			v.getvPrincipal().getTabla().getTable().setModel(m.fillDataTable());
+			updateTableView();
 
 		}
 
 		
 		private void updateTableView() {
-			v.getvPrincipal().getTabla().getTable().setModel(m.fillDataTable());
+			
+			if(v.getvPrincipal().getRbAll().isSelected()) {
+			v.getvPrincipal().getTabla().getTable().setModel(m.fillDataAll());
+			}
+			if(v.getvPrincipal().getRbGamers().isSelected()) {
+				v.getvPrincipal().getTabla().getTable().setModel(m.fillDataGamers());
+				}
+			if(v.getvPrincipal().getRbGames().isSelected()) {
+				v.getvPrincipal().getTabla().getTable().setModel(m.fillDataGames());
+				}
+			
 		}
 	}
 	

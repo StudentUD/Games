@@ -29,7 +29,53 @@ public class Model {
 
 	}
 
-	public DefaultTableModel fillDataTable() {
+	public DefaultTableModel fillDataGamers() {
+
+		Object[][] array = new Object[dataGamers.size()][];
+
+		int i = 0;
+		for (GamerDTO e : dataGamers) {
+			array[i] = new Object[2];
+			
+			int id = e.getIdGamer(); 
+			array[i][0] =id ;
+			array[i][1] = e.getNickName();
+			
+			i++;
+		}
+		Object[] columnas = { "ID", "Nick Name"};
+		DefaultTableModel df = new DefaultTableModel();
+		df.setColumnIdentifiers(columnas);
+		df.setDataVector(array, columnas);
+		return df;
+	}
+	
+	public DefaultTableModel fillDataGames() {
+
+		Object[][] array = new Object[dataGames.size()][];
+
+		int i = 0;
+		for (GameDTO e : dataGames) {
+			array[i] = new Object[4];
+			
+			int fk = e.getFk_idGamer(); 
+			
+			array[i][0] = fk;
+		
+			array[i][1] = e.getPoints();
+			array[i][2] = e.getGame();
+			array[i][3] = e.getDateOfGame();
+			
+			i++;
+		}
+		Object[] columnas = { "ID", "Points", "Game", "Date of Game"};
+		DefaultTableModel df = new DefaultTableModel();
+		df.setColumnIdentifiers(columnas);
+		df.setDataVector(array, columnas);
+		return df;
+	}
+	
+	public DefaultTableModel fillDataAll() {
 
 		Object[][] array = new Object[dataGames.size()][];
 
@@ -48,17 +94,12 @@ public class Model {
 			array[i][3] = e.getGame();
 			array[i][4] = e.getDateOfGame();
 			
-
 			i++;
 		}
 		Object[] columnas = { "ID", "Nick Name ", "Points", "Game", "Date of Game"};
-
 		DefaultTableModel df = new DefaultTableModel();
-
 		df.setColumnIdentifiers(columnas);
-
 		df.setDataVector(array, columnas);
-
 		return df;
 	}
 

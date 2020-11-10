@@ -3,9 +3,11 @@ package view;
 import java.awt.BorderLayout;
 
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -18,6 +20,9 @@ public class VentanaPrincipal extends JFrame {
 	private JButton btnLoad;
 
 	private Table tabla;
+	private JRadioButton rbGames;
+	private JRadioButton rbGamers;
+	private JRadioButton rbAll;
 
 	public VentanaPrincipal() {
 
@@ -38,13 +43,13 @@ public class VentanaPrincipal extends JFrame {
 		btnUpdate = new JButton("Update");
 		pButtons.add(btnUpdate);
 
-		btnRead = new JButton("Read");
+		btnRead = new JButton("Read / Report");
 		pButtons.add(btnRead);
 
 		btnDelete = new JButton("Delete");
 		pButtons.add(btnDelete);
 
-		btnLoad = new JButton("Load");
+		btnLoad = new JButton("Load Gamers");
 		pButtons.add(btnLoad);
 
 		JPanel panel = new JPanel(new BorderLayout());
@@ -52,6 +57,24 @@ public class VentanaPrincipal extends JFrame {
 
 		tabla = new Table();
 		panel.add(tabla, BorderLayout.CENTER);
+		
+		JPanel rbButton = new JPanel(); 
+		rbGames = new JRadioButton("Games");
+		rbButton.add(rbGames); 
+		
+		rbGamers = new JRadioButton("Gamers");
+		rbButton.add(rbGamers);
+		rbAll = new JRadioButton("All data");
+		rbButton.add(rbAll); 
+		
+		panel.add(rbButton,BorderLayout.SOUTH);
+		
+
+		ButtonGroup grb = new ButtonGroup(); 
+		grb.add(rbGames);
+		grb.add(rbGamers);
+		grb.add(rbAll);
+		
 
 		setContentPane(panel);
 
@@ -86,4 +109,30 @@ public class VentanaPrincipal extends JFrame {
 		return tabla;
 	}
 
+	public JRadioButton getRbGames() {
+		return rbGames;
+	}
+
+	public void setRbGames(JRadioButton rbGames) {
+		this.rbGames = rbGames;
+	}
+
+	public JRadioButton getRbGamers() {
+		return rbGamers;
+	}
+
+	public void setRbGamers(JRadioButton rbGamers) {
+		this.rbGamers = rbGamers;
+	}
+
+	public JRadioButton getRbAll() {
+		return rbAll;
+	}
+
+	public void setRbAll(JRadioButton rbAll) {
+		this.rbAll = rbAll;
+	}
+
+	
+	
 }
