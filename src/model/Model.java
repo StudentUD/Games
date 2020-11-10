@@ -4,36 +4,54 @@ import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
 
+import model.persistence.GameDTO;
 import model.persistence.GamerDTO;
 
 public class Model {
 
-	private ArrayList<GamerDTO> data;
+	private ArrayList<GamerDTO> dataGamers;
+	private ArrayList<GameDTO> dataGames;
 
 	public Model() {
-		data = new ArrayList<GamerDTO>();
+		dataGamers = new ArrayList<GamerDTO>();
+		dataGames = new ArrayList<GameDTO>();
 	}
 
 	public void addGamer(GamerDTO g) {
 		System.out.println(g.toString());
-		data.add(g);
+		dataGamers.add(g);
+
+	}
+	
+	public void addGame(GameDTO g) {
+		System.out.println(g.toString());
+		dataGames.add(g);
 
 	}
 
 	public DefaultTableModel fillDataTable() {
 
-		Object[][] array = new Object[data.size()][];
+		Object[][] array = new Object[dataGames.size()][];
 
 		int i = 0;
-		for (GamerDTO e : data) {
-			array[i] = new Object[4];
-			array[i][0] = e.getIdGamer();
-			array[i][1] = e.getNickName();
+		for (GameDTO e : dataGames) {
+			array[i] = new Object[5];
+			
+			int fk = e.getFk_idGamer(); 
+			 GamerDTO  t = getGamer(fk);
+			
+			 //FIXME: Si no esta el regsitro en array
+			 
+			array[i][0] = fk;
+			array[i][1] = t.getNickName();
 			array[i][2] = e.getPoints();
 			array[i][3] = e.getGame();
+			array[i][4] = e.getDateOfGame();
+			
+
 			i++;
 		}
-		Object[] columnas = { "ID", "Nick Name ", "Points", "Game" };
+		Object[] columnas = { "ID", "Nick Name ", "Points", "Game", "Date of Game"};
 
 		DefaultTableModel df = new DefaultTableModel();
 
@@ -48,7 +66,7 @@ public class Model {
 
 		GamerDTO g = null;
 
-		for (GamerDTO gamerDTO : data) {
+		for (GamerDTO gamerDTO : dataGamers) {
 			if (gamerDTO.getIdGamer() == idGamer) {
 				g = gamerDTO;
 			}
@@ -56,17 +74,29 @@ public class Model {
 
 		return g;
 	}
+	
+	private  GamerDTO getGamer(int fk) {
+		
+		GamerDTO t = null; 
+		
+		for (GamerDTO gamerDTO : dataGamers) {
+			if(gamerDTO.getIdGamer() == fk) {
+				t =gamerDTO; 
+			}
+		}
+		return t; 
+	}
 
 	public GamerDTO get(int toUpdate) {
 		GamerDTO g = null;
 
-		for (int i = 0; i < data.size(); i++) {
-			GamerDTO gamerDTO = data.get(i);
+		for (int i = 0; i < dataGamers.size(); i++) {
+			GamerDTO gamerDTO = dataGamers.get(i);
 
 			if (gamerDTO.getIdGamer() == toUpdate) {
 				g = gamerDTO;
 
-				data.remove(i);
+				dataGamers.remove(i);
 			}
 		}
 
@@ -75,11 +105,19 @@ public class Model {
 	}
 
 	public void overideData(ArrayList<GamerDTO> a) {
-		data = a;
+		dataGamers = a;
 	}
 
 	public ArrayList<GamerDTO> getData() {
-		return data;
+		return dataGamers;
+	}
+
+	public boolean isNotGamer(int id) {
+		boolean isOnArray= false;
+		for (GamerDTO gamerDTO : dataGamers) {
+			if(gamerDTO.getIdGamer() == id) {isOnArray= true;}
+		}
+		return false;
 	}
 
 }

@@ -11,6 +11,7 @@ public class VentanaPrincipal extends JFrame {
 
 	// declaro
 	private JButton btnCreate;
+	private JButton btnCreateGame; 
 	private JButton btnUpdate;
 	private JButton btnRead;
 	private JButton btnDelete;
@@ -27,8 +28,12 @@ public class VentanaPrincipal extends JFrame {
 		pButtons.setLayout(bl);
 
 		// iniclizar y añado al panel
-		btnCreate = new JButton("Create");
+		btnCreate = new JButton("Create Gamer");
 		pButtons.add(btnCreate);
+		
+		btnCreateGame = new JButton("Create game");
+		pButtons.add(btnCreateGame);
+
 
 		btnUpdate = new JButton("Update");
 		pButtons.add(btnUpdate);
@@ -56,6 +61,9 @@ public class VentanaPrincipal extends JFrame {
 
 	public JButton getBtnCreate() {
 		return btnCreate;
+	}
+	public JButton getBtnCreateGame() {
+		return btnCreateGame;
 	}
 
 	public JButton getBtnUpdate() {

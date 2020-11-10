@@ -4,10 +4,25 @@ public class View {
 
 	private VentanaPrincipal vPrincipal;
 	private FillData vFillData;
+	private FillDataGame vFillDataGame; 
+	
 
 	public View() {
 		vPrincipal = new VentanaPrincipal();
 		vFillData = new FillData();
+		vFillDataGame = new FillDataGame(); 
+	}
+
+	public FillDataGame getvFDataGame() {
+		return vFillDataGame;
+	}
+
+	public void setvFDataGame(FillDataGame vFDataGame) {
+		this.vFillDataGame = vFDataGame;
+	}
+
+	public void setvPrincipal(VentanaPrincipal vPrincipal) {
+		this.vPrincipal = vPrincipal;
 	}
 
 	public VentanaPrincipal getvPrincipal() {

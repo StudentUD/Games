@@ -3,11 +3,14 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import model.DateTimeProject;
 import model.Model;
+import model.persistence.GameDTO;
 import model.persistence.GamerDAO;
 import model.persistence.GamerDTO;
 import view.FillData;
@@ -22,11 +25,13 @@ public class Controller {
 		this.m = m;
 		this.v = v;
 
+
 		v.getvPrincipal().setVisible(true);
 
 		HandlerEvents ev = new HandlerEvents();
 
 		v.getvPrincipal().getBtnCreate().addActionListener(ev);
+		v.getvPrincipal().getBtnCreateGame().addActionListener(ev);
 		v.getvPrincipal().getBtnUpdate().addActionListener(ev);
 
 		v.getvPrincipal().getBtnDelete().addActionListener(ev);
@@ -38,6 +43,7 @@ public class Controller {
 		// coloca los otrso botones
 
 		v.getvFillData().getBtnSave().addActionListener(ev);
+		v.getvFDataGame().getBtnSave().addActionListener(ev);
 	}
 
 	public class HandlerEvents implements ActionListener {
@@ -50,9 +56,11 @@ public class Controller {
 			if (v.getvPrincipal().getBtnCreate() == b) {
 				v.getvFillData().setVisible(true);
 			}
+			if (v.getvPrincipal().getBtnCreateGame() == b) {
+				v.getvFDataGame().setVisible(true);
+			}
 
 			if (v.getvPrincipal().getBtnUpdate() == b) {
-
 				int toUpdate = Integer.parseInt(JOptionPane.showInputDialog("Enter ID gamer"));
 
 				GamerDTO g = m.get(toUpdate);
@@ -60,44 +68,18 @@ public class Controller {
 					v.getvFillData().setVisible(true);
 					v.getvFillData().getTxtIDGamer().setText(String.valueOf(g.getIdGamer()));
 					v.getvFillData().getTxtNickname().setText(g.getNickName());
-					v.getvFillData().getTxtPoints().setText(String.valueOf(g.getPoints()));
-					v.getvFillData().getTxtGame().setText(g.getGame());
-
 				} else {
 
 					JOptionPane.showMessageDialog(null, "Not found ID");
 				}
-
 			}
 
 			if (v.getvFillData().getBtnSave() == b) {
-				// trae la infoemacion del fill data
-				System.out.println("Datos " + v.getvFillData().getTxtNickname().getText());
-
-				// d es el contendor de la info
-				GamerDTO d = new GamerDTO(v.getvFillData().getTxtNickname().getText(),
-						Integer.parseInt(v.getvFillData().getTxtIDGamer().getText()),
-						Integer.parseInt(v.getvFillData().getTxtPoints().getText()),
-						v.getvFillData().getTxtGame().getText());
-
-				// lo alamceno en logica de palicacion
-				m.addGamer(d);
-				v.getvPrincipal().getTabla().getTable().setModel(m.fillDataTable());
-
-				v.getvFillData().setVisible(false);
-				v.setvFillData(new FillData()); // creando ottro objeto por la ventana qyue tenia
-				v.getvFillData().getBtnSave().addActionListener(this); // suscribo el evento a la nueva ventana Filldata
-
-				// transacciones
-				GamerDAO dao = new GamerDAO();
-				if (dao.save(d, 2)) {
-					JOptionPane.showMessageDialog(null, "Gamer saved");
-				} else {
-					JOptionPane.showMessageDialog(null, "Error");
-				}
-
-				dao.save(m.getData());
-
+				saveGamer(); 
+			}
+			
+			if (v.getvFDataGame().getBtnSave() == b) {
+				saveGame(); 
 			}
 
 			if (v.getvPrincipal().getBtnLoad() == b) {
@@ -132,6 +114,82 @@ public class Controller {
 
 		}
 
+		private void saveGame() {
+			int id = Integer.parseInt(v.getvFDataGame().getTxtIDGamer().getText()); 
+			int points = Integer.parseInt(v.getvFDataGame().getTxtPoints().getText()); 
+			String game = v.getvFDataGame().getTxtGame().getText(); 
+			 String dt = v.getvFDataGame().getTxtDateTime().getText(); 
+			
+			if (!m.isNotGamer(id)) {
+				// d es el contendor de la info
+				
+				
+				GameDTO g = new GameDTO(id,DateTimeProject.parseLocalDateTime(dt),points,  game);
+				m.addGame(g);
+
+				/* transacciones
+				GamerDAO dao = new GamerDAO();
+				if (dao.save(d, 2)) {
+					JOptionPane.showMessageDialog(null, "Gamer saved");
+				} else {
+					JOptionPane.showMessageDialog(null, "Error");
+				}
+
+				dao.save(m.getData());
+				
+				*/
+			} else {
+				JOptionPane.showMessageDialog(null, "No found iD");
+			}
+
+			updateTableView();
+
+			v.getvFDataGame().setVisible(false);
+
+			v.setvFillData(new FillData()); // creando ottro objeto por la ventana qyue tenia
+			v.getvFillData().getBtnSave().addActionListener(this); // suscribo el evento a la nueva ventana Filldata
+		
+			
+		}
+
+		private void saveGamer() {
+			// trae la infoemacion del fill data
+			
+			
+			
+			
+			int id = Integer.parseInt(v.getvFillData().getTxtIDGamer().getText()); 
+			String nickName = v.getvFillData().getTxtNickname().getText(); 
+
+			
+			if (!m.isNotGamer(id)) {
+				// d es el contendor de la info
+				GamerDTO d = new GamerDTO(nickName, id);
+				m.addGamer(d);
+
+				// transacciones
+				GamerDAO dao = new GamerDAO();
+				if (dao.save(d, 2)) {
+					JOptionPane.showMessageDialog(null, "Gamer saved");
+				} else {
+					JOptionPane.showMessageDialog(null, "Error");
+				}
+
+				dao.save(m.getData());
+			} else {
+				JOptionPane.showMessageDialog(null, "Duplicated ID");
+			}
+
+			updateTableView();
+
+			v.getvFillData().setVisible(false);
+
+			v.setvFillData(new FillData()); // creando ottro objeto por la ventana qyue tenia
+			v.getvFillData().getBtnSave().addActionListener(this); // suscribo el evento a la nueva ventana Filldata
+
+		}
+
+
 		private void loadAllData() {
 			GamerDAO dao = new GamerDAO();
 			m.overideData(dao.loadAll());
@@ -148,6 +206,12 @@ public class Controller {
 
 		}
 
+		
+		private void updateTableView() {
+			v.getvPrincipal().getTabla().getTable().setModel(m.fillDataTable());
+		}
 	}
+	
+	
 
 }

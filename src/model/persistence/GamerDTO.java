@@ -10,19 +10,17 @@ public class GamerDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String nickName;;
 	private int idGamer;
-	private int points;
-	private String game;
+
 
 	// contructor por defecto
 	public GamerDTO() {
 	}
 
 	// sobrecarga
-	public GamerDTO(String nickName, int id, int p, String g) {
+	public GamerDTO(String nickName, int id) {
 		this.nickName = nickName;
 		this.idGamer = id;
-		this.points = p;
-		this.game = g;
+
 	}
 
 	// gett y setter
@@ -42,20 +40,5 @@ public class GamerDTO implements Serializable {
 		this.idGamer = idGamer;
 	}
 
-	public int getPoints() {
-		return points;
-	}
-
-	public void setPoints(int points) {
-		this.points = points;
-	}
-
-	public String getGame() {
-		return game;
-	}
-
-	public void setGame(String game) {
-		this.game = game;
-	}
 
 }
