@@ -43,7 +43,7 @@ public class Controller {
 		// coloca los otrso botones
 
 		v.getvFillData().getBtnSave().addActionListener(ev);
-		v.getvFDataGame().getBtnSave().addActionListener(ev);
+		v.getvFillDataGame().getBtnSave().addActionListener(ev);
 	}
 
 	public class HandlerEvents implements ActionListener {
@@ -57,7 +57,7 @@ public class Controller {
 				v.getvFillData().setVisible(true);
 			}
 			if (v.getvPrincipal().getBtnCreateGame() == b) {
-				v.getvFDataGame().setVisible(true);
+				v.getvFillDataGame().setVisible(true);
 			}
 
 			if (v.getvPrincipal().getBtnUpdate() == b) {
@@ -78,7 +78,7 @@ public class Controller {
 				saveGamer(); 
 			}
 			
-			if (v.getvFDataGame().getBtnSave() == b) {
+			if (v.getvFillDataGame().getBtnSave() == b) {
 				saveGame(); 
 			}
 
@@ -115,12 +115,12 @@ public class Controller {
 		}
 
 		private void saveGame() {
-			int id = Integer.parseInt(v.getvFDataGame().getTxtIDGamer().getText()); 
-			int points = Integer.parseInt(v.getvFDataGame().getTxtPoints().getText()); 
-			String game = v.getvFDataGame().getTxtGame().getText(); 
-			 String dt = v.getvFDataGame().getTxtDateTime().getText(); 
+			int id = Integer.parseInt(v.getvFillDataGame().getTxtIDGamer().getText()); 
+			int points = Integer.parseInt(v.getvFillDataGame().getTxtPoints().getText()); 
+			String game = v.getvFillDataGame().getTxtGame().getText(); 
+			 String dt = v.getvFillDataGame().getTxtDateTime().getText(); 
 			
-			if (!m.isNotGamer(id)) {
+			if (m.isGamer(id)) {
 				// d es el contendor de la info
 				
 				
@@ -144,7 +144,7 @@ public class Controller {
 
 			updateTableView();
 
-			v.getvFDataGame().setVisible(false);
+			v.getvFillDataGame().setVisible(false);
 
 			v.setvFillData(new FillData()); // creando ottro objeto por la ventana qyue tenia
 			v.getvFillData().getBtnSave().addActionListener(this); // suscribo el evento a la nueva ventana Filldata
@@ -162,7 +162,8 @@ public class Controller {
 			String nickName = v.getvFillData().getTxtNickname().getText(); 
 
 			
-			if (!m.isNotGamer(id)) {
+			if (!m.isGamer(id)) {
+				
 				// d es el contendor de la info
 				GamerDTO d = new GamerDTO(nickName, id);
 				m.addGamer(d);

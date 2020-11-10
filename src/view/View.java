@@ -13,11 +13,11 @@ public class View {
 		vFillDataGame = new FillDataGame(); 
 	}
 
-	public FillDataGame getvFDataGame() {
+	public FillDataGame getvFillDataGame() {
 		return vFillDataGame;
 	}
 
-	public void setvFDataGame(FillDataGame vFDataGame) {
+	public void setvFillDataGame(FillDataGame vFDataGame) {
 		this.vFillDataGame = vFDataGame;
 	}
 

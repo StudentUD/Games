@@ -112,12 +112,14 @@ public class Model {
 		return dataGamers;
 	}
 
-	public boolean isNotGamer(int id) {
+	public boolean isGamer(int id) {
 		boolean isOnArray= false;
 		for (GamerDTO gamerDTO : dataGamers) {
 			if(gamerDTO.getIdGamer() == id) {isOnArray= true;}
+			
+			System.out.println("encuntra reptriod");
 		}
-		return false;
+		return isOnArray;
 	}
 
 }
