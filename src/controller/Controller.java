@@ -39,17 +39,28 @@ public class Controller {
 		v.getvPrincipal().getBtnRead().addActionListener(ev);
 
 		v.getvPrincipal().getBtnLoad().addActionListener(ev);
+		
+		
+		
 
 		// coloca los otrso botones
 
 		v.getvFillData().getBtnSave().addActionListener(ev);
 		v.getvFillDataGame().getBtnSave().addActionListener(ev);
+		
+		
+		
+		// botones de repote
+		v.getvPrincipal().getRbAll().addActionListener(ev);
+		v.getvPrincipal().getRbGamers().addActionListener(ev);
+		v.getvPrincipal().getRbGames().addActionListener(ev);
 	}
 
 	public class HandlerEvents implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			updateTableView();
 
 			Object b = e.getSource();
 
