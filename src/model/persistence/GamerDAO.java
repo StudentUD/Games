@@ -16,14 +16,14 @@ public class GamerDAO {
 
 	// op 1 si es dato por dato
 	// op 2 si volcamos todo el objeto
-	public boolean save(GamerDTO o, int op) { // file Not foun IO Expecion
+	public boolean saveLast(GamerDTO o, int op) { // file Not foun IO Expecion
 
 		boolean isOK = false;
 
 		if (op == 1) { // sacar dato a dato
 			DataOutputStream out;
 			try {
-				out = new DataOutputStream(new FileOutputStream("./Data/Data.dat"));
+				out = new DataOutputStream(new FileOutputStream("./Data/DataLast.dat"));
 
 				out.writeUTF(o.getNickName());
 				out.writeInt(o.getIdGamer());
@@ -42,7 +42,7 @@ public class GamerDAO {
 
 			ObjectOutputStream salida;
 			try {
-				salida = new ObjectOutputStream(new FileOutputStream("./Data/Data.obj"));
+				salida = new ObjectOutputStream(new FileOutputStream("./Data/DataLast.obj"));
 				salida.writeObject(o);
 				salida.close();
 				isOK = true;
@@ -61,7 +61,7 @@ public class GamerDAO {
 		return isOK;
 	}
 
-	public GamerDTO load(String file, int op) { // file Not foun IO Expecion
+	public GamerDTO loadLast(String file, int op) { // file Not foun IO Expecion
 
 		GamerDTO o = null;
 
@@ -113,95 +113,13 @@ public class GamerDAO {
 	}
 
 	
-	
-	
-	///// Array list 
-	
-	
-
-	///// Array list 
-	
-	/**
-	public boolean save(ArrayList<GamerDTO> o) { // file Not foun IO Expecion
+	public boolean saveAll(ArrayList<GamerDTO> o) { // file Not foun IO Expecion
 
 		boolean isOK = false;
 
 		ObjectOutputStream salida;
 		try {
-			salida = new ObjectOutputStream(new FileOutputStream("./Data/DataAll.obj"));
-			
-			for (GamerDTO e : o) {
-				salida.writeObject(e);
-			}
-			
-			salida.close();
-			isOK = true;
-		} catch (FileNotFoundException e) {
-			System.err.println(e.getMessage());
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.err.println(e.getMessage());
-			e.printStackTrace();
-		}
-
-		return isOK;
-	}
-
-	public ArrayList<GamerDTO> loadAll(String file) { // file Not foun IO Expecion
-
-		ArrayList<GamerDTO> o = null;
-
-		ObjectInputStream input;
-		try {
-
-			input = new ObjectInputStream(new FileInputStream("./Data/" + file + ".obj"));
-			try {
-				o =new ArrayList<GamerDTO>(); 
-				
-				
-				Object obj = null;
-				while ((obj = input.readObject()) != null) {
-				    if (obj instanceof GamerDTO) {
-				    GamerDTO ab = ( GamerDTO) obj;
-				    o .add(ab);
-				    }
-				    
-				   
-				    input.close();
-				}
-			} catch (ClassNotFoundException e) {
-				System.err.println("Class not found" + e.getMessage());
-				e.printStackTrace();
-			}
-
-			input.close();
-
-		} catch (FileNotFoundException e) {
-			System.err.println(e.getMessage());
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.err.println(e.getMessage());
-			e.printStackTrace();
-		}
-
-		return o;
-	}
-
-
-
-	***/
-
-	public boolean save(ArrayList<GamerDTO> o) { // file Not foun IO Expecion
-
-		boolean isOK = false;
-
-		ObjectOutputStream salida;
-		try {
-			salida = new ObjectOutputStream(new FileOutputStream("./Data/DataAll.obj"));
+			salida = new ObjectOutputStream(new FileOutputStream("./Data/DataGamersAll.obj"));
 			salida.writeObject(o);
 			salida.close();
 			isOK = true;
@@ -218,14 +136,13 @@ public class GamerDAO {
 		return isOK;
 	}
 
-	public ArrayList<GamerDTO> loadAll() { // file Not foun IO Expecion
+	public ArrayList<GamerDTO> loadAll() throws IOException, FileNotFoundException { // file Not foun IO Expecion
 
 		ArrayList<GamerDTO> o = null;
 
 		ObjectInputStream input;
-		try {
-
-			input = new ObjectInputStream(new FileInputStream("./Data/DataAll.obj"));
+		
+			input = new ObjectInputStream(new FileInputStream("./Data/DataGamersAll.obj"));
 			try {
 				o =new ArrayList<GamerDTO>();
 						o = (ArrayList<GamerDTO>) input.readObject(); 
@@ -236,15 +153,7 @@ public class GamerDAO {
 
 			input.close();
 
-		} catch (FileNotFoundException e) {
-			System.err.println(e.getMessage());
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			System.err.println(e.getMessage());
-			e.printStackTrace();
-		}
+		
 
 		return o;
 	}
