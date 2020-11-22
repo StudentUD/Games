@@ -1,4 +1,4 @@
-package model.persistence;
+package model.persistence.Game;
 
 import java.io.Serializable;
 import java.sql.Date;

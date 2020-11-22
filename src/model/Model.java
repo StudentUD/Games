@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
 
-import model.persistence.GameDAO;
-import model.persistence.GameDTO;
 import model.persistence.GamerDAO;
 import model.persistence.GamerDTO;
+import model.persistence.Game.GameDAO;
+import model.persistence.Game.GameDTO;
 
 public class Model {
 
@@ -74,7 +74,7 @@ public class Model {
 		}
 		Object[] columnas = { "ID", "Points", "Game", "Date of Game" };
 		DefaultTableModel df = new DefaultTableModel();
-		df.setColumnIdentifiers(columnas);
+		
 		df.setDataVector(array, columnas);
 		return df;
 	}

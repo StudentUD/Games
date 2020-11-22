@@ -10,10 +10,8 @@ import javax.swing.table.DefaultTableModel;
 
 import model.DateTimeProject;
 import model.Model;
-
-import model.persistence.GameDTO;
-
 import model.persistence.GamerDTO;
+import model.persistence.Game.GameDTO;
 import view.FillData;
 import view.View;
 
